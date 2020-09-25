@@ -17,7 +17,7 @@ Perform actions based off the Entity you are interacting with in the world. Such
 ### How to Use
 - Toggle NUI via the assigned key (Default: Z(Can be changed))
 - Cursor appears on the screen. 
-- Right click on A Object. (Cars, Peds, obejcts)
+- Right click on an Entity. (Cars, Peds, obejcts)
 - Select the option/task you want to perform.
 <br/>
 
