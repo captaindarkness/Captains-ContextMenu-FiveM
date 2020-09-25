@@ -210,7 +210,7 @@ $(function () {
     {
         var node;
         var textnode
-        if (id == "close")
+        if (id == "close" || id == "export-entity-data")
         {
             node = document.createElement("hr");
             document.getElementById("context-menu").appendChild(node);
@@ -255,7 +255,7 @@ $(function () {
     {
         if(objectType == 2)
         {
-            createMenuItem("Door >", "door-menu"); //Creates the Initial Menu option.
+            createMenuItem("Doors", "door-menu"); //Creates the Initial Menu option.
             createSubMenu("door-sub-menu","door-menu"); //Adds the ID handles to a Sub menu element
             createSubMenuItems(doorMenu, "door-sub-menu"); //Adds the Menu options to the specific Sub menu.
         }
@@ -266,13 +266,13 @@ $(function () {
         //For populating Sub menus with JOB related options.(E.g jobs like EMS would also be here)
         if(myJob == "tow" && objectType == 2)
         {
-            createMenuItem("Tow >", "tow-menu");
+            createMenuItem("Tow", "tow-menu");
             createSubMenu("tow-sub-menu","tow-menu");
             createSubMenuItems(towMenu, "tow-sub-menu");
         }
         else if(myJob == "police")
         {
-            createMenuItem("Police >", "police-menu");
+            createMenuItem("Police", "police-menu");
             createSubMenu("police-sub-menu","police-menu");
             createSubMenuItems(policeMenu, "police-sub-menu");
         }

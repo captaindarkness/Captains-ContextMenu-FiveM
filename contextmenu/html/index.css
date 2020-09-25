@@ -31,18 +31,18 @@ body {
   margin:2px 0px;
   border-color:#555;
 }
-/* Door menu */
-/* #door-menu::after {
+/* 
+-Door menu-
+-----------
+*/
+#door-menu::after {
+  /* This is the Submenu Arrow */
   content: "";
   position: absolute;
-  right: 6px;
-  top: 55%;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
+  right: 5px;
   border: 5px solid transparent;
   border-left-color: #808080;
-} */
-
+}
 
 #context-menu #door-menu:hover::after { border-left-color: #fff; }
 
@@ -75,17 +75,18 @@ body {
   pointer-events: auto;
 }
 
-/* Tow Menu */
-/* #tow-menu::after {
+/* 
+-Tow Menu-
+----------
+*/
+#tow-menu::after {
+  /* This is the Submenu Arrow */
   content: "";
   position: absolute;
-  right: 6px;
-  top: 55%;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
+  right: 5px;
   border: 5px solid transparent;
   border-left-color: #808080;
-} */
+}
 
 #context-menu #tow-menu:hover::after { border-left-color: #fff; }
 
@@ -118,17 +119,18 @@ body {
   pointer-events: auto;
 }
 
-/* Police Menu */
-/* #police-menu::after {
+/*
+-Police Menu-
+-------------
+*/
+#police-menu::after {
+  /* This is the Submenu Arrow */
   content: "";
   position: absolute;
-  right: 6px;
-  top: 55%;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
+  right: 5px;
   border: 5px solid transparent;
   border-left-color: #808080;
-} */
+}
 
 #context-menu #police-menu:hover::after { border-left-color: #fff; }
 
@@ -160,7 +162,10 @@ body {
   transform: translate(0, -23px) scale(1);
   pointer-events: auto;
 }
-/* Illegal actions */
+/*
+-Illegal actions-
+-----------------
+*/
 #context-menu #steal:hover {
   background:rgb(255, 0, 0);
 }
