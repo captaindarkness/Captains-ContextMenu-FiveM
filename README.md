@@ -4,7 +4,7 @@ A Raytrace & Entity based context menu for GTA V FiveM.
 <br/>
 Perform actions based off the Entity you are interacting with in the world. Such as Vehicles, ATMs, Phonebooths, Trashcans, Doors, Cashregisters and all other Entities that the game offers. <br/>
 <br/>
-**NOTE:** This is a context menu Shell meaning features such as the Police menu are just an Empty menu buttons that do nothing. It's there as an Example on how **YOU** can add your own actions to it. It is a system to be build on and have it work how **YOU** want it to.<br/>
+**NOTE:** This is a context menu Shell meaning features such as the Police menu are just an Empty menu buttons that do nothing but they are setup in such a way that you can easily add calls to them such as Exports to actual Police related scripts. It's there as an Example on how **YOU** can add your own actions to it. It is a system to be build on and have it work how **YOU** want it to.<br/>
 **READ THE HOW TO MODIFY AT THE BOTTOM**
 <br/>
 
