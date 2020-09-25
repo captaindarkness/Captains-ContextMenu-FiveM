@@ -2,7 +2,10 @@
 ### About <br/>
 A Raytrace & Entity based context menu for GTA V FiveM.
 <br/>
-Perform actions based off the Entity you are interacting with in the world. Such as Vehicles, ATMs, Phonebooths, Trashcans, Doors, Cashregisters and all other Entities that the game offers.
+Perform actions based off the Entity you are interacting with in the world. Such as Vehicles, ATMs, Phonebooths, Trashcans, Doors, Cashregisters and all other Entities that the game offers. <br/>
+<br/>
+**NOTE:** This is a context menu Shell meaning features such as the Police menu are just an Empty menu buttons that do nothing. It's there as an Example on how **YOU** can add your own actions to it. It is a system to be build on and have it work how **YOU** want it to.<br/>
+**READ THE HOW TO MODIFY AT THE BOTTOM**
 <br/>
 
 ### How to Install
@@ -35,10 +38,13 @@ Perform actions based off the Entity you are interacting with in the world. Such
 <br/>
 
 ### How to Modify
-
+In the code itself i've written comments on how everything works and how **YOU** can add your own functionality to the resource. <br/>
+The code contains Examples on how you can implement your own options as well as some features, such as the Doors menu which is fully operational. <br/>
+Every action (button) in the menu leads to somewhere. Meaning you can easily add the code you want and the actions you want to happen when X button on the menu is pressed.
+<br/>
 
 ## Shout outs:
 - Simu, for code related to Screen to world coords.
-- Taso, for fixing Frontend bugs (CSS/JS)
+- Taso, Frontend assistance with bugs (CSS/JS)
 - VenomXNL, for Object name from Hash -> https://github.com/VenomXNL/ObjectNameFromHash <br/>
-(The version of HashToName is a Modified version of VenomXNL's repo)
+(The version of HashToName is a Modified version of VenomXNL's repo to allow for Exports instead of prints)
