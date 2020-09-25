@@ -52,7 +52,7 @@ local display = false
 local z_key = 20
 local startRaycast = false
 -- police, tow, ems etc.
-local myJob = "tow" --Update this based on your own job system. This gets sent to the Javascript to add the appropriate menu items.
+local myJob = "police" --Update this based on your own job system. This gets sent to the Javascript to add the appropriate menu items.
 local isAdmin = true --Allows for the Export option which write entity data to a txt file.
 local entity =
 {
@@ -105,10 +105,10 @@ RegisterNUICallback("use", function(data)
     --EXAMPLE--
     if entity.hash == 506770882 then
         print("ATM")
-        exports["t-notify-master"]:SendTextAlert("error", "This is an ATM.", 2500, true)
+        --exports["t-notify-master"]:SendTextAlert("error", "This is an ATM.", 2500, true)
     elseif entity.hash == 1158960338 then
         print("payphone")
-        exports["t-notify-master"]:SendTextAlert("error", "This is a payphone.", 2500, true)
+        --exports["t-notify-master"]:SendTextAlert("error", "This is a payphone.", 2500, true)
     end
     -----------------------
     --IF entity is a player one could play an animation such as.

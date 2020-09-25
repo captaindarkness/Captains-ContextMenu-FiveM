@@ -77,12 +77,13 @@ $(function () {
         }
     };
     //Callbacks to contextmenu-c.lua
-    //e.target.id is the <div> id = "-----"</div> on the element
-    //------------
+    //e.target.id is the <div> id = "XXXXXXXX" </div> on the element
+    //-----------------------------------------------------------------
     // $.post('https://contextmenu/use', JSON.stringify({}));
     // return
     //- Calls back the specific function in the lua script -> RegisterNUICallback("use", function(data) ............. end) etc.
-    //------------
+    //-----------------------------------------------------------------
+    //Add NEW cases for any NEW menu items that are created so they can do Callbacks to the LUA.
     document.addEventListener("click", (e) => {
         // -- doorIndex:  
         // -- 0 = Front Left Door  
@@ -182,10 +183,11 @@ $(function () {
         objectType = null;
         doorIndex = null;
     }
-    
+    //-------------------------------------------
+    //-------Where the menu is generated---------
+    //-------------------------------------------
     function populateContextMenu()
     {
-        //-------Where the menu is generated---------
         createMenuItem("Use", "use");
         createMenuItem("Examine", "examine");
         checkIfVehicle();
@@ -200,7 +202,6 @@ $(function () {
     {
         var item = document.getElementById("context-menu");
         item.innerHTML = ''; //<--- Look into a CLEANER option.
-        //console.log("Cleared menu");
     }
     //---------------------------------------------
     //Creates menu items
@@ -264,13 +265,14 @@ $(function () {
     function checkJob()
     {
         //For populating Sub menus with JOB related options.(E.g jobs like EMS would also be here)
+        //objectType == 2 is a vehicle. isPlayer is a Bool that is either TRUE or FALSE depending on the Entity is a player.
         if(myJob == "tow" && objectType == 2)
         {
             createMenuItem("Tow", "tow-menu");
             createSubMenu("tow-sub-menu","tow-menu");
             createSubMenuItems(towMenu, "tow-sub-menu");
         }
-        else if(myJob == "police")
+        else if(myJob == "police" && isPlayer)
         {
             createMenuItem("Police", "police-menu");
             createSubMenu("police-sub-menu","police-menu");
@@ -280,6 +282,7 @@ $(function () {
     //Adds the illegal actions to the menu
     function createIllegalActions()
     {
+        //Checks if the Entity type is a PED and a Player.
         if(objectType == 1 && isPlayer)
         {
             createMenuItem("Steal", "steal");
