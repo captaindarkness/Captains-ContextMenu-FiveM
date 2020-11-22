@@ -49,8 +49,7 @@ local pi = math.pi
 local player
 local playerCoords
 local display = false
-local z_key = 20
-local startRaycast = false
+local z_key = 'z'
 -- police, tow, ems etc.
 local myJob = "police" --Update this based on your own job system. This gets sent to the Javascript to add the appropriate menu items.
 local isAdmin = true --Allows for the Export option which write entity data to a txt file.
@@ -82,7 +81,6 @@ end
 
 --Sends over the object data(type, job, admin, isplayer) to the Javascript to determine what menus should be added to the contextmenu on creation.
 function SendObjectData()
-    startRaycast = false
     SendNUIMessage({
         type = "objectData",
         objectType = entity.type,
@@ -94,8 +92,8 @@ end
 
 --These are called from the Javascript via .. $.post('http://ContextMenu/rigthclick', JSON.stringify({}));
 RegisterNUICallback("rightclick", function(data)
-    --toggle raycast
-    startRaycast = true
+    --Start raycast
+    StartRayCast()
 end)
 
 RegisterNUICallback("use", function(data)
@@ -282,78 +280,55 @@ RegisterNUICallback("exit", function(data)
     clearEntityData()
     chat("exited", {0,255,0})
     SetDisplay(false)
-    startRaycast = false
 end)
 
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        player = GetPlayerPed(-1, false)
-        playerCoords = GetEntityCoords(player, 1)
-        --Toggle the mouse / NUI via Z key. Can be changed to what ever.
-        
-        if IsControlJustReleased(1, z_key) then
-            display = not display
-            SetDisplay(display)
-        end
-        --Disable controls when NUI is active
-        if display then
-            DisableControlAction(0, 1, display) -- LookLeftRight
-            DisableControlAction(0, 2, display) -- LookUpDown
-            DisableControlAction(0, 142, display) -- MeleeAttackAlternate
-            DisableControlAction(0, 18, display) -- Enter
-            DisableControlAction(0, 322, display) -- ESC
-            DisableControlAction(0, 106, display) -- VehicleMouseControlOverride
-        end
-        --Is true when NUI is open and the cursor has be RIGHT CLICKED
-        --Shoots a ray from the ped to the cursors position in 3D space
-        if startRaycast then
-            local hit, endCoords, surfaceNormal, entityHit, entityType, direction = ScreenToWorld(flags, toIgnore)
-            --Sets the object and type for the Global variables.
-            if entityHit == 0 then --When the ray trace hit the ground or sky it wouldnt clear the type. Ground/sky is target 0. 
-                entityType = 0
-            end
-            entity.target = entityHit
-            entity.type = entityType
-            entity.hash = GetEntityModel(entityHit)
-            entity.coords = GetEntityCoords(entityHit, 1)
-            entity.heading = GetEntityHeading(entityHit)
-            entity.rotation = GetEntityRotation(entityHit)
-            entity.modelName = exports["hashtoname"]:objectNameFromHash(entity.hash)
-            if IsPedAPlayer(entityHit) then --IsPedAPlayer returns false or 1 NOT true or false .. weirdly
-                entity.isPlayer = true
-            else
-                entity.isPlayer = false
-            end
-            SendObjectData()
-            --Maybe get state of door and send over to JS to add a icon next to the door menu items to show if they are open or closed.
+RegisterKeyMapping('*triggercontextmenu', 'Open Context Menu', 'keyboard', z_key)
 
-            --For debugging, Line color changes depending on the TYPE of entity.
-            --Also change startRaycast to false for when the right click has happen so it doesnt raycast endlessly
-            -- 0 = no entity  
-            -- 1 = ped  
-            -- 2 = vehicle  
-            -- 3 = object              
-            -- if hit <= 0 then -- No entity
-            --     DrawLine(playerCoords, direction, 255, 255, 255, 120)
-            --     startRaycast = false
-            -- elseif hit and entityType == 0 then
-            --     DrawLine(playerCoords, endCoords, 255, 255, 255, 120)
-            --     startRaycast = false
-            -- elseif entityType == 1 then -- PED
-            --     DrawLine(playerCoords, endCoords, 255, 255, 0, 150)
-            --     startRaycast = false
-            -- elseif IsEntityAVehicle(entityHit) then --OR hit and entityType == 2 <- Vehicle
-            --     DrawLine(playerCoords, endCoords, 255, 0, 0, 150)
-            --     startRaycast = false
-            -- elseif entityType == 3 then -- Object
-            --     DrawLine(playerCoords, endCoords, 0, 255, 0, 150)
-            --     startRaycast = false
-            -- end
-            --print(entityHash, entityHit, entityType, endCoords)
-        end
+RegisterCommand("*triggercontextmenu", function ()
+    player = PlayerPedId()
+    playerCoords = GetEntityCoords(player, 1)
+    display = not display
+    SetDisplay(display)
+end)
+
+function StartRayCast()
+    local hit, endCoords, surfaceNormal, entityHit, entityType, direction = ScreenToWorld(flags, toIgnore)
+    --Sets the object and type for the Global variables.
+    if entityHit == 0 then --When the ray trace hit the ground or sky it wouldnt clear the type. Ground/sky is target 0. 
+        entityType = 0
     end
-end)
+    entity.target = entityHit
+    entity.type = entityType
+    entity.hash = GetEntityModel(entityHit)
+    entity.coords = GetEntityCoords(entityHit, 1)
+    entity.heading = GetEntityHeading(entityHit)
+    entity.rotation = GetEntityRotation(entityHit)
+    entity.modelName = exports["hashtoname"]:objectNameFromHash(entity.hash)
+    if IsPedAPlayer(entityHit) then --IsPedAPlayer returns false or 1 NOT true or false .. weirdly
+        entity.isPlayer = true
+    else
+        entity.isPlayer = false
+    end
+    SendObjectData()
+    --Maybe get state of door and send over to JS to add a icon next to the door menu items to show if they are open or closed.
+    --For debugging, Line color changes depending on the TYPE of entity.
+    -- 0 = no entity  
+    -- 1 = ped  
+    -- 2 = vehicle  
+    -- 3 = object              
+    -- if hit <= 0 then -- No entity
+    --     DrawLine(playerCoords, direction, 255, 255, 255, 120)
+    -- elseif hit and entityType == 0 then
+    --     DrawLine(playerCoords, endCoords, 255, 255, 255, 120)
+    -- elseif entityType == 1 then -- PED
+    --     DrawLine(playerCoords, endCoords, 255, 255, 0, 150)
+    -- elseif IsEntityAVehicle(entityHit) then --OR hit and entityType == 2 <- Vehicle
+    --     DrawLine(playerCoords, endCoords, 255, 0, 0, 150)
+    -- elseif entityType == 3 then -- Object
+    --     DrawLine(playerCoords, endCoords, 0, 255, 0, 150)
+    -- end
+    --print(entityHash, entityHit, entityType, endCoords)
+end
 
 --Clearing the entity data to make sure its overwriten on the next menu call.
 function clearEntityData()
