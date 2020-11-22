@@ -66,7 +66,7 @@ $(function () {
     // if the person uses the escape or Z key, it will exit the resource
     //Does a Callback to the lua to CLOSE the NUI.
     //27 = ESC , 90 = Z
-    document.onkeyup = function (data) {
+    document.onkeydown = function (data) {
         if (data.which == 27 || data.which == 90) 
         {
             document.getElementById("context-menu").classList.remove("active");
